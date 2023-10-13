@@ -18,6 +18,7 @@ type PlayerStats = {
     losses: number;
     winstreak: number;
     highestWinstreak: number;
+    clan: string | null;
   };
   kitpvp?: {
     balance: number;
@@ -30,11 +31,29 @@ type PlayerStats = {
   };
 };
 
+interface Options {
+  customUserAgent?: string;
+}
+
+function getHeaders(options?: Options) {
+  if (options?.customUserAgent) {
+    return {
+      headers: {
+        "User-Agent": options.customUserAgent,
+      },
+    };
+  }
+  return {};
+}
+
 export async function getPlayerStats(
   username: string,
+  options?: Options,
 ): Promise<PlayerStats | undefined> {
   if (!isUsernameValid(username)) return undefined;
-  const data = await fetch(`https://api.coralmc.it/api/user/${username}`);
+  const data = await fetch(`https://api.coralmc.it/api/user/${username}`, {
+    ...getHeaders(options),
+  });
   const json = await data.json();
 
   const { bedwars, kitpvp } = json;
@@ -43,30 +62,31 @@ export async function getPlayerStats(
     bedwars:
       bedwars && bedwars.name
         ? {
-            level: bedwars.level,
-            experience: bedwars.exp,
-            coins: bedwars.coins,
-            kills: bedwars.kills,
-            deaths: bedwars.deaths,
-            finalKills: bedwars.final_kills,
-            finalDeaths: bedwars.final_deaths,
-            wins: bedwars.wins,
-            losses: bedwars.played - bedwars.wins,
-            winstreak: bedwars.winstreak,
-            highestWinstreak: bedwars.h_winstreak,
-          }
+          level: bedwars.level,
+          experience: bedwars.exp,
+          coins: bedwars.coins,
+          kills: bedwars.kills,
+          deaths: bedwars.deaths,
+          finalKills: bedwars.final_kills,
+          finalDeaths: bedwars.final_deaths,
+          wins: bedwars.wins,
+          losses: bedwars.played - bedwars.wins,
+          winstreak: bedwars.winstreak,
+          highestWinstreak: bedwars.h_winstreak,
+          clan: bedwars.clan || null,
+        }
         : undefined,
     kitpvp:
       kitpvp && kitpvp.displayName
         ? {
-            balance: kitpvp.balance,
-            kills: kitpvp.kills,
-            deaths: kitpvp.deaths,
-            bounty: kitpvp.bounty,
-            highestBounty: kitpvp.topBounty,
-            streak: kitpvp.streak,
-            highestStreak: kitpvp.topstreak,
-          }
+          balance: kitpvp.balance,
+          kills: kitpvp.kills,
+          deaths: kitpvp.deaths,
+          bounty: kitpvp.bounty,
+          highestBounty: kitpvp.topBounty,
+          streak: kitpvp.streak,
+          highestStreak: kitpvp.topstreak,
+        }
         : undefined,
   };
 }
@@ -96,7 +116,7 @@ type PlayerInfo = {
   username: string;
   isBanned: boolean;
   ranks: {
-    global: GlobalRank;
+    global?: GlobalRank;
     kitpvp?: KitpvpRank;
     bedwars?: BedwarsRank;
     raw: {
@@ -107,18 +127,24 @@ type PlayerInfo = {
   };
 };
 
-function getFormattedRank(rawRank: string | undefined): string | undefined {
-  if (!rawRank) return undefined;
+function getFormattedRank(rawRank: string | undefined): string | null {
+  if (!rawRank) return null;
   const formattedRank = rawRank.replace(/[^A-Z]/g, "");
-  return formattedRank == "" ? undefined : formattedRank;
+  return formattedRank == "" ? null : formattedRank;
 }
 
 export async function getPlayerInfo(
   username: string,
+  options?: Options,
 ): Promise<PlayerInfo | undefined> {
   if (!isUsernameValid(username)) return undefined;
 
-  const data = await fetch(`https://api.coralmc.it/api/user/${username}/infos`);
+  const data = await fetch(
+    `https://api.coralmc.it/api/user/${username}/infos`,
+    {
+      ...getHeaders(options),
+    },
+  );
   const json = await data.json();
 
   if (!json.username) return undefined;
