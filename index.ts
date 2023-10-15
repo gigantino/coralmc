@@ -16,6 +16,7 @@ type PlayerStats = {
     finalDeaths: number;
     wins: number;
     losses: number;
+    bedsBroken: number;
     winstreak: number;
     highestWinstreak: number;
     clan: string | null;
@@ -62,31 +63,32 @@ export async function getPlayerStats(
     bedwars:
       bedwars && bedwars.name
         ? {
-          level: bedwars.level,
-          experience: bedwars.exp,
-          coins: bedwars.coins,
-          kills: bedwars.kills,
-          deaths: bedwars.deaths,
-          finalKills: bedwars.final_kills,
-          finalDeaths: bedwars.final_deaths,
-          wins: bedwars.wins,
-          losses: bedwars.played - bedwars.wins,
-          winstreak: bedwars.winstreak,
-          highestWinstreak: bedwars.h_winstreak,
-          clan: bedwars.clan || null,
-        }
+            level: bedwars.level,
+            experience: bedwars.exp,
+            coins: bedwars.coins,
+            kills: bedwars.kills,
+            deaths: bedwars.deaths,
+            finalKills: bedwars.final_kills,
+            finalDeaths: bedwars.final_deaths,
+            wins: bedwars.wins,
+            losses: bedwars.played - bedwars.wins,
+            bedsBroken: bedwars.beds_broken,
+            winstreak: bedwars.winstreak,
+            highestWinstreak: bedwars.h_winstreak,
+            clan: bedwars.clan || null,
+          }
         : undefined,
     kitpvp:
       kitpvp && kitpvp.displayName
         ? {
-          balance: kitpvp.balance,
-          kills: kitpvp.kills,
-          deaths: kitpvp.deaths,
-          bounty: kitpvp.bounty,
-          highestBounty: kitpvp.topBounty,
-          streak: kitpvp.streak,
-          highestStreak: kitpvp.topstreak,
-        }
+            balance: kitpvp.balance,
+            kills: kitpvp.kills,
+            deaths: kitpvp.deaths,
+            bounty: kitpvp.bounty,
+            highestBounty: kitpvp.topBounty,
+            streak: kitpvp.streak,
+            highestStreak: kitpvp.topstreak,
+          }
         : undefined,
   };
 }
