@@ -8,11 +8,12 @@ CoralMC's API is still in alpha and isn't documented. In the future an access to
 
 ## Installation
 ```sh
-# Node
+# npm
 npm i coralmc
+# yarn
 yarn add coralmc
+# pnpm
 pnpm add coralmc
-
 # Bun
 bun add coralmc
 ```
@@ -42,4 +43,16 @@ if (playerStats) {
   console.log(playerStats.bedwars);
   console.log(playerStats.kitpvp);
 } else console.log("Player not found!");
+```
+Get winstreak leaderboards:
+```JS
+const highestWinstreakLb = await coralmc.getBedwarsLeaderboard(
+  "highest-winstreak"
+);
+const currentWinstreakLb = await coralmc.getBedwarsLeaderboard("winstreak");
+
+console.log({
+  highestWinstreakLb,
+  currentWinstreakLb,
+});
 ```
