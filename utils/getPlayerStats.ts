@@ -15,24 +15,23 @@ export default async function getPlayerStats(
   const { bedwars, kitpvp } = json;
 
   return {
-    bedwars:
-      bedwars && bedwars.name
-        ? {
-            level: bedwars.level,
-            experience: bedwars.exp,
-            coins: bedwars.coins,
-            kills: bedwars.kills,
-            deaths: bedwars.deaths,
-            finalKills: bedwars.final_kills,
-            finalDeaths: bedwars.final_deaths,
-            wins: bedwars.wins,
-            losses: bedwars.played - bedwars.wins,
-            bedsBroken: bedwars.beds_broken,
-            winstreak: bedwars.winstreak,
-            highestWinstreak: bedwars.h_winstreak,
-            clan: bedwars.clan || null,
-          }
-        : undefined,
+    bedwars: bedwars
+      ? {
+          level: bedwars.level,
+          experience: bedwars.exp,
+          coins: bedwars.coins,
+          kills: bedwars.kills,
+          deaths: bedwars.deaths,
+          finalKills: bedwars.final_kills,
+          finalDeaths: bedwars.final_deaths,
+          wins: bedwars.wins,
+          losses: bedwars.played - bedwars.wins,
+          bedsBroken: bedwars.beds_broken,
+          winstreak: bedwars.winstreak,
+          highestWinstreak: bedwars.h_winstreak,
+          clan: bedwars.clan || null,
+        }
+      : undefined,
     kitpvp:
       kitpvp && kitpvp.displayName
         ? {
