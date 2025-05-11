@@ -9,7 +9,7 @@ export type GlobalRank =
   | "MOD+"
   | "MOD"
   | "HELPER"
-  | "HELPER"
+  | "MEDIA"
   | "BUILDER"
   | "YOUTUBER"
   | "FAMOUS"
