@@ -1,4 +1,4 @@
-import type { Options } from "../types/Options";
+import type { Options } from "../types/Common";
 
 export function isUsernameValid(username: string) {
   if (username.length < 3 || username.length > 16) {

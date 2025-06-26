@@ -1,16 +1,19 @@
 import type { Options, ApiError } from "../types/Common";
-import type { PlayerInfoResponse } from "../types/Player";
+import type { PlayerSearchCompletion } from "../types/Player";
 import { getHeaders, isUsernameValid } from "./common";
 
-export default async function getPlayerInfo(
-  username: string,
+export default async function getPlayerSearchCompletion(
+  searchTerm: string,
   options?: Options
-): Promise<PlayerInfoResponse | ApiError | undefined> {
-  if (!isUsernameValid(username)) return undefined;
+): Promise<PlayerSearchCompletion | ApiError> {
+  if (!searchTerm || searchTerm.length < 3 || !isUsernameValid(searchTerm))
+    return [];
 
   try {
     const data = await fetch(
-      `https://www.coralmc.it/api/v1/stats/player/${username}`,
+      `https://www.coralmc.it/api/v1/stats/search/${encodeURIComponent(
+        searchTerm
+      )}`,
       {
         ...getHeaders(options),
       }
@@ -22,7 +25,7 @@ export default async function getPlayerInfo(
       return json as ApiError;
     }
 
-    return json as PlayerInfoResponse;
+    return json as PlayerSearchCompletion;
   } catch (error) {
     return {
       message:

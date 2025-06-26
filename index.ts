@@ -1,16 +1,41 @@
 import getPlayerInfo from "./utils/getPlayerInfo";
-import getPlayerStats from "./utils/getPlayerStats";
+import getBedwarsStats from "./utils/getBedwarsStats";
+import getBedwarsMatches from "./utils/getBedwarsMatches";
+import getBedwarsMatch from "./utils/getBedwarsMatch";
 import getBedwarsLeaderboard from "./utils/getBedwarsLeaderboard";
-import type { PlayerInfo, PlayerStats } from "./types/Player";
+import getPlayerSearchCompletion from "./utils/getPlayerSearchCompletion";
+import getKitpvpStats from "./utils/getKitpvpStats";
+import type {
+  PlayerInfoResponse,
+  PlayerSearchCompletion,
+} from "./types/Player";
+import type {
+  BedwarsStats,
+  BedwarsMatch,
+  BedwarsMatchDetail,
+  BedwarsPlayerMatchStats,
+} from "./types/Bedwars";
+import type { KitpvpStats } from "./types/Kitpvp";
+import type { ApiError } from "./types/Common";
 import type { LeaderboardEntry } from "./types/Leaderboard";
 
 export {
   // Functions
   getPlayerInfo,
-  getPlayerStats,
+  getBedwarsStats,
+  getBedwarsMatches,
+  getBedwarsMatch,
   getBedwarsLeaderboard,
+  getPlayerSearchCompletion,
+  getKitpvpStats,
   // Types
-  PlayerInfo,
-  PlayerStats,
+  PlayerInfoResponse,
+  PlayerSearchCompletion,
+  BedwarsStats,
+  BedwarsMatch,
+  BedwarsMatchDetail,
+  BedwarsPlayerMatchStats,
+  KitpvpStats,
+  ApiError,
   LeaderboardEntry,
 };

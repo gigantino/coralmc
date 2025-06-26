@@ -3,7 +3,7 @@ import type {
   LeaderboardEntry,
   RawLeaderboardEntry,
 } from "../types/Leaderboard";
-import type { Options } from "../types/Options";
+import type { Options } from "../types/Common";
 import { getHeaders } from "./common";
 
 export default async function getBedwarsLeaderboard(

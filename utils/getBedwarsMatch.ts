@@ -1,16 +1,14 @@
 import type { Options, ApiError } from "../types/Common";
-import type { PlayerInfoResponse } from "../types/Player";
-import { getHeaders, isUsernameValid } from "./common";
+import type { BedwarsMatchDetail } from "../types/Bedwars";
+import { getHeaders } from "./common";
 
-export default async function getPlayerInfo(
-  username: string,
+export default async function getBedwarsMatch(
+  matchId: string | number,
   options?: Options
-): Promise<PlayerInfoResponse | ApiError | undefined> {
-  if (!isUsernameValid(username)) return undefined;
-
+): Promise<BedwarsMatchDetail | ApiError> {
   try {
     const data = await fetch(
-      `https://www.coralmc.it/api/v1/stats/player/${username}`,
+      `https://www.coralmc.it/api/v1/stats/bedwars/match/${matchId}`,
       {
         ...getHeaders(options),
       }
@@ -22,7 +20,7 @@ export default async function getPlayerInfo(
       return json as ApiError;
     }
 
-    return json as PlayerInfoResponse;
+    return json as BedwarsMatchDetail;
   } catch (error) {
     return {
       message:

@@ -1,16 +1,20 @@
 import type { Options, ApiError } from "../types/Common";
-import type { PlayerInfoResponse } from "../types/Player";
+import type { BedwarsStats } from "../types/Bedwars";
 import { getHeaders, isUsernameValid } from "./common";
 
-export default async function getPlayerInfo(
+export default async function getBedwarsStats(
   username: string,
   options?: Options
-): Promise<PlayerInfoResponse | ApiError | undefined> {
-  if (!isUsernameValid(username)) return undefined;
+): Promise<BedwarsStats | ApiError> {
+  if (!isUsernameValid(username)) {
+    return {
+      message: "Invalid username format",
+    };
+  }
 
   try {
     const data = await fetch(
-      `https://www.coralmc.it/api/v1/stats/player/${username}`,
+      `https://www.coralmc.it/api/v1/stats/bedwars/${username}`,
       {
         ...getHeaders(options),
       }
@@ -22,7 +26,7 @@ export default async function getPlayerInfo(
       return json as ApiError;
     }
 
-    return json as PlayerInfoResponse;
+    return json as BedwarsStats;
   } catch (error) {
     return {
       message:
